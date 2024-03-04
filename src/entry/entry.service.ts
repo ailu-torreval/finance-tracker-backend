@@ -52,6 +52,6 @@ export class EntryService {
 
   async remove(id: number) {
     const deletedItem = this.entryRepository.delete(id);
-    return deletedItem;
+    return {"id": id, "status": "deleted"};
   }
 }
