@@ -24,15 +24,18 @@ export class CategoryService {
     return categories;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  async findOne(id: number): Promise<Category> {
+    const category = await this.categoryRepository.findOneBy({id});
+    return category;
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(id: number, updateCategoryDto: CreateCategoryDto): Promise<Category> {
+    await this.categoryRepository.update(id, {...updateCategoryDto});
+    const updatedCategory = await this.categoryRepository.findOneBy({id});
+    return updatedCategory;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
-  }
+  async remove(id: number) {
+    await this.categoryRepository.delete(id);
+    return {"id": id, "status": "deleted"};  }
 }
